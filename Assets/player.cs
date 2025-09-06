@@ -16,5 +16,13 @@ public class player : MonoBehaviour
         {
             rb.linearVelocity = Vector2.up * 5;
         }
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            rb.linearVelocity = Vector2.left * 5;
+        }
+        if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            rb.linearVelocity = Vector2.right * 5;
+        }
     }
 }
