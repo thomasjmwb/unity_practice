@@ -141,7 +141,10 @@ public class QuickSceneSetup : MonoBehaviour
         cardGrid.style.borderTopRightRadius = 12;
         cardGrid.style.borderBottomLeftRadius = 12;
         cardGrid.style.borderBottomRightRadius = 12;
-        cardGrid.style.padding = 10;
+        cardGrid.style.paddingLeft = 10;
+        cardGrid.style.paddingRight = 10;
+        cardGrid.style.paddingTop = 10;
+        cardGrid.style.paddingBottom = 10;
         
         // Create 9 grid slots
         for (int i = 0; i < 9; i++)
@@ -163,7 +166,10 @@ public class QuickSceneSetup : MonoBehaviour
             slot.style.borderRightColor = new Color(0.3f, 0.4f, 0.5f, 1f);
             slot.style.borderTopColor = new Color(0.3f, 0.4f, 0.5f, 1f);
             slot.style.borderBottomColor = new Color(0.3f, 0.4f, 0.5f, 1f);
-            slot.style.margin = 2;
+            slot.style.marginLeft = 2;
+            slot.style.marginRight = 2;
+            slot.style.marginTop = 2;
+            slot.style.marginBottom = 2;
             cardGrid.Add(slot);
         }
         
