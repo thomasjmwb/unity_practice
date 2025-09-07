@@ -27,7 +27,13 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
             
         if (cardImage == null)
         {
-            cardImage = transform.GetChild(0)?.GetComponent<Image>();
+            // Check if we have any children before trying to access them
+            if (transform.childCount > 0)
+            {
+                cardImage = transform.GetChild(0)?.GetComponent<Image>();
+            }
+            
+            // If still null, create a new card image object
             if (cardImage == null)
             {
                 GameObject cardImageObj = new GameObject("CardImage");

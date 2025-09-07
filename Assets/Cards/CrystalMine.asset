@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275ea34d24bfe4a49baec66f39849b6a, type: 3}
+  m_Name: CrystalMine
+  m_EditorClassIdentifier: Assembly-CSharp::Card
+  cardName: Crystal Mine
+  description: Gains +2 gold each round
+  cardArt: {fileID: 0}
+  faction: 2
+  cost: 4
+  rarity: 3
+  effects:
+  - effectName: Crystal Mine Effect
+    baseValue: 3
+    requiresPosition: 0
+    requiresFactionCount: 0
+    isGlobalModifier: 0
+  prefersCorners: 0
+  prefersEdges: 0
+  prefersCenter: 0

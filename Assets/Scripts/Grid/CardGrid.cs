@@ -23,6 +23,30 @@ public class CardGrid : MonoBehaviour
     
     void InitializeGrid()
     {
+        // If no prefab is provided, create simple data-only slots
+        // UI representation is handled separately by UI Toolkit
+        if (cardSlotPrefab == null)
+        {
+            Debug.Log("CardGrid: No slot prefab provided, using data-only mode for UI Toolkit");
+            // Initialize the grid data structure without visual slots
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    // Create minimal GameObject for data purposes
+                    GameObject slotObj = new GameObject($"DataSlot_{x}_{y}");
+                    slotObj.transform.SetParent(gridParent);
+                    
+                    // Add a minimal CardSlot component for data handling
+                    CardSlot slot = slotObj.AddComponent<CardSlot>();
+                    slot.Initialize(new GridPosition(x, y), this);
+                    gridSlots[x, y] = slot;
+                }
+            }
+            return;
+        }
+        
+        // Original code for when prefab is available
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)

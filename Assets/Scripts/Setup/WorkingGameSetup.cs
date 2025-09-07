@@ -7,6 +7,10 @@ public class WorkingGameSetup : MonoBehaviour
     [Tooltip("This will automatically set up the entire game when you add it to the scene")]
     public bool autoSetupOnAwake = true;
     
+    [Header("Initialization Control")]
+    [Tooltip("Ensures this script runs before GameManager for proper initialization order")]
+    public bool enforceExecutionOrder = true;
+    
     [Header("Created Assets")]
     public Card[] gameCards = new Card[10];
     
@@ -29,6 +33,9 @@ public class WorkingGameSetup : MonoBehaviour
         CreateWorkingUI();
         SetupDeck();
         ConnectAllComponents();
+        
+        // Explicitly initialize the game after all setup is complete
+        InitializeGameAfterSetup();
         
         Debug.Log("✅ Complete game setup finished! Press Play to test the game.");
         Debug.Log("🎯 Game Features:");
@@ -140,19 +147,32 @@ public class WorkingGameSetup : MonoBehaviour
             gameManager.maxRounds = 12;
         }
         
-        // Create CardGrid
+        // Create CardGrid component (data-only, UI handled by UI Toolkit)
         if (FindObjectOfType<CardGrid>() == null)
         {
-            GameObject gridObj = new GameObject("CardGrid");
-            CardGrid grid = gridObj.AddComponent<CardGrid>();
-            gridObj.transform.position = Vector3.zero;
+            GameObject cardGridObj = new GameObject("CardGrid");
+            CardGrid cardGrid = cardGridObj.AddComponent<CardGrid>();
+            
+            // Create a minimal setup for the data-layer CardGrid
+            // Since UI is handled by UI Toolkit, we just need the data structure
+            GameObject gridParent = new GameObject("GridParent");
+            gridParent.transform.SetParent(cardGridObj.transform);
+            cardGrid.gridParent = gridParent.transform;
+            cardGrid.spacing = new Vector2(1.5f, 1.5f);
+            
+            // Note: cardSlotPrefab will be null, but we'll handle this in CardGrid
         }
         
         // Create HandManager
         if (FindObjectOfType<HandManager>() == null)
         {
             GameObject handObj = new GameObject("HandManager");
-            handObj.AddComponent<HandManager>();
+            HandManager handManager = handObj.AddComponent<HandManager>();
+            
+            // Configure HandManager for UI Toolkit mode
+            handManager.maxHandSize = 10;
+            handManager.cardSpacing = 150f;
+            // handParent and cardUIPrefab will be null for UI Toolkit mode
         }
         
         // Create ShopManager
@@ -414,8 +434,28 @@ public class WorkingGameSetup : MonoBehaviour
         
         var clearGridBtn = CreateStyledButton("Clear Grid", "clear-grid-btn", false);
         clearGridBtn.clicked += () => {
-            var cardGrid = FindObjectOfType<CardGrid>();
-            if (cardGrid != null) cardGrid.ClearGrid();
+            // Find the card grid in the UI document
+            var uiDoc = FindObjectOfType<UIDocument>();
+            if (uiDoc != null)
+            {
+                var gridElement = uiDoc.rootVisualElement.Q("card-grid");
+                if (gridElement != null)
+                {
+                    // Clear the UI grid slots
+                    for (int y = 0; y < 3; y++)
+                    {
+                        for (int x = 0; x < 3; x++)
+                        {
+                            var slot = gridElement.Q($"slot-{x}-{y}");
+                            if (slot != null)
+                            {
+                                slot.Clear();
+                            }
+                        }
+                    }
+                    Debug.Log("Grid cleared via UI");
+                }
+            }
         };
         
         bottomBar.Add(endRoundBtn);
@@ -485,7 +525,11 @@ public class WorkingGameSetup : MonoBehaviour
     void ConnectAllComponents()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
-        if (gameManager == null) return;
+        if (gameManager == null) 
+        {
+            Debug.LogError("ConnectAllComponents: GameManager not found!");
+            return;
+        }
         
         // Connect all managers
         gameManager.playerDeck = FindObjectOfType<Deck>();
@@ -493,6 +537,9 @@ public class WorkingGameSetup : MonoBehaviour
         gameManager.handManager = FindObjectOfType<HandManager>();
         gameManager.shopManager = FindObjectOfType<ShopManager>();
         gameManager.uiManager = FindObjectOfType<UIManager>();
+        
+        // Debug log to verify connections
+        Debug.Log($"Component connections - Deck: {gameManager.playerDeck != null}, CardGrid: {gameManager.cardGrid != null}, HandManager: {gameManager.handManager != null}, ShopManager: {gameManager.shopManager != null}, UIManager: {gameManager.uiManager != null}");
         
         // Configure shop with available cards
         ShopManager shopManager = gameManager.shopManager;
@@ -520,5 +567,26 @@ public class WorkingGameSetup : MonoBehaviour
         }
         
         Debug.Log("✓ All components connected successfully");
+    }
+    
+    void InitializeGameAfterSetup()
+    {
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.LogError("InitializeGameAfterSetup: GameManager not found!");
+            return;
+        }
+        
+        // Verify all components are connected before initializing
+        if (gameManager.playerDeck == null || gameManager.cardGrid == null || 
+            gameManager.handManager == null || gameManager.shopManager == null)
+        {
+            Debug.LogError("InitializeGameAfterSetup: Some components are still null! Cannot initialize game.");
+            return;
+        }
+        
+        Debug.Log("🎮 All components verified - starting game initialization");
+        gameManager.InitializeGame();
     }
 }

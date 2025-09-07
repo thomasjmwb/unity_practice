@@ -67,21 +67,32 @@ public class HandManager : MonoBehaviour
     
     public void ClearHand()
     {
-        foreach (CardUI cardUI in cardUIs)
+        // Handle case where UI is managed by UI Toolkit instead of GameObjects
+        if (cardUIs.Count > 0)
         {
-            if (cardUI != null)
+            foreach (CardUI cardUI in cardUIs)
             {
-                Destroy(cardUI.gameObject);
+                if (cardUI != null)
+                {
+                    Destroy(cardUI.gameObject);
+                }
             }
+            cardUIs.Clear();
         }
         
         cardsInHand.Clear();
-        cardUIs.Clear();
         OnHandChanged?.Invoke();
     }
     
     void CreateCardUI(Card card)
     {
+        // If no prefab is provided, skip UI creation (UI Toolkit handles it)
+        if (cardUIPrefab == null || handParent == null)
+        {
+            Debug.Log($"HandManager: No UI prefab/parent provided for {card.cardName}, using UI Toolkit mode");
+            return;
+        }
+        
         GameObject cardObj = Instantiate(cardUIPrefab, handParent);
         CardUI cardUI = cardObj.GetComponent<CardUI>();
         

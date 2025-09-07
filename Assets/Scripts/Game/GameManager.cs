@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameState currentState = GameState.MainMenu;
     
     private List<GlobalModifier> globalModifiers = new List<GlobalModifier>();
+    private bool isInitialized = false;
     
     public System.Action<GameState> OnGameStateChanged;
     public System.Action<int> OnGoldChanged;
@@ -57,23 +58,68 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        InitializeGame();
+        // Don't auto-initialize - wait for explicit initialization from setup
+        Debug.Log("GameManager: Waiting for explicit initialization from WorkingGameSetup");
     }
     
     public void InitializeGame()
     {
+        if (isInitialized)
+        {
+            Debug.LogWarning("GameManager: Already initialized, skipping duplicate initialization");
+            return;
+        }
+        
+        // Verify all required components are connected
+        if (playerDeck == null || cardGrid == null || handManager == null)
+        {
+            Debug.LogError("GameManager: Cannot initialize - missing required components!");
+            Debug.LogError($"playerDeck: {playerDeck != null}, cardGrid: {cardGrid != null}, handManager: {handManager != null}");
+            return;
+        }
+        
+        Debug.Log("🎮 GameManager: Starting game initialization");
+        
         currentRound = 1;
         currentGold = 0;
         currentGoldTarget = initialGoldTarget;
         globalModifiers.Clear();
         
+        // Initialize the deck first
+        if (playerDeck != null)
+        {
+            playerDeck.InitializeDeck();
+        }
+        
         ChangeGameState(GameState.Playing);
+        isInitialized = true;
+        
+        Debug.Log("✅ GameManager: Initialization complete, starting first round");
         StartNewRound();
     }
     
     public void StartNewRound()
     {
         Debug.Log($"Starting Round {currentRound} - Target: {currentGoldTarget} gold");
+        
+        // Safety checks with helpful error messages
+        if (cardGrid == null)
+        {
+            Debug.LogError("GameManager: cardGrid is null! Make sure WorkingGameSetup has run and connected all components.");
+            return;
+        }
+        
+        if (handManager == null)
+        {
+            Debug.LogError("GameManager: handManager is null! Make sure WorkingGameSetup has run and connected all components.");
+            return;
+        }
+        
+        if (playerDeck == null)
+        {
+            Debug.LogError("GameManager: playerDeck is null! Make sure WorkingGameSetup has run and connected all components.");
+            return;
+        }
         
         cardGrid.ClearGrid();
         handManager.ClearHand();
@@ -186,7 +232,11 @@ public class GameManager : MonoBehaviour
     
     public void RestartGame()
     {
-        playerDeck.InitializeDeck();
+        isInitialized = false;
+        if (playerDeck != null)
+        {
+            playerDeck.InitializeDeck();
+        }
         InitializeGame();
     }
     
