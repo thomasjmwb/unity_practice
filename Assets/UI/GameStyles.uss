@@ -1,0 +1,505 @@
+/* Main Container */
+.main-container {
+    flex-grow: 1;
+    background-color: rgb(20, 25, 35);
+    font-size: 16px;
+    color: white;
+}
+
+/* Top Bar Styles */
+.top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: rgb(30, 35, 45);
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(60, 70, 85);
+    min-height: 80px;
+}
+
+.info-panel {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: rgb(40, 45, 55);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(60, 70, 85);
+    min-width: 100px;
+}
+
+.info-label {
+    font-size: 12px;
+    color: rgb(180, 190, 200);
+    margin-bottom: 5px;
+    -unity-font-style: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-value {
+    font-size: 20px;
+    color: white;
+    -unity-font-style: bold;
+}
+
+.round-value {
+    color: rgb(100, 200, 255);
+}
+
+.gold-value {
+    color: rgb(255, 215, 0);
+}
+
+.deck-value {
+    color: rgb(150, 255, 150);
+}
+
+.phase-value {
+    color: rgb(255, 150, 255);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.gold-panel {
+    min-width: 200px;
+}
+
+.gold-progress {
+    width: 150px;
+    height: 8px;
+    margin: 5px 0;
+    background-color: rgb(60, 70, 85);
+    border-radius: 4px;
+}
+
+.gold-progress .unity-progress-bar__background {
+    background-color: rgb(60, 70, 85);
+    border-radius: 4px;
+}
+
+.gold-progress .unity-progress-bar__progress {
+    background-color: rgb(255, 215, 0);
+    border-radius: 4px;
+}
+
+.target-value {
+    font-size: 14px;
+    color: rgb(180, 190, 200);
+}
+
+/* Game Area */
+.game-area {
+    flex-grow: 1;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.grid-container {
+    flex-grow: 2;
+    min-width: 400px;
+}
+
+.hand-container {
+    flex-grow: 1;
+    min-width: 300px;
+    margin-left: 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    color: rgb(200, 210, 220);
+    -unity-font-style: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Grid Styles */
+.card-grid {
+    width: 360px;
+    height: 360px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: center;
+    background-color: rgb(25, 30, 40);
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: rgb(60, 70, 85);
+    padding: 10px;
+}
+
+.grid-slot {
+    width: 110px;
+    height: 110px;
+    background-color: rgb(40, 45, 55);
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: rgb(60, 70, 85);
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+}
+
+.grid-slot:hover {
+    background-color: rgb(50, 55, 65);
+    border-color: rgb(100, 120, 140);
+}
+
+.grid-slot.occupied {
+    background-color: rgb(60, 70, 85);
+    border-color: rgb(100, 120, 140);
+}
+
+.grid-slot.drop-target {
+    background-color: rgb(60, 100, 60);
+    border-color: rgb(100, 200, 100);
+}
+
+.grid-info {
+    margin-top: 15px;
+    align-items: center;
+}
+
+.grid-gold-total {
+    font-size: 20px;
+    color: rgb(255, 215, 0);
+    -unity-font-style: bold;
+    text-align: center;
+}
+
+/* Hand Styles */
+.hand-scroll {
+    flex-grow: 1;
+    background-color: rgb(25, 30, 40);
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: rgb(60, 70, 85);
+    padding: 15px;
+}
+
+.hand-cards {
+    flex-direction: column;
+}
+
+.hand-card {
+    background-color: rgb(40, 45, 55);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(60, 70, 85);
+    padding: 15px;
+    transition-duration: 0.2s;
+    margin-bottom: 10px;
+}
+
+.hand-card:hover {
+    background-color: rgb(50, 55, 65);
+    border-color: rgb(100, 120, 140);
+    scale: 1.02;
+}
+
+.hand-card.dragging {
+    opacity: 0.7;
+    scale: 1.1;
+}
+
+.card-name {
+    font-size: 16px;
+    color: white;
+    -unity-font-style: bold;
+    margin-bottom: 5px;
+}
+
+.card-description {
+    font-size: 12px;
+    color: rgb(180, 190, 200);
+    white-space: normal;
+    margin-bottom: 8px;
+}
+
+.card-stats {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-cost {
+    font-size: 14px;
+    color: rgb(255, 150, 100);
+    -unity-font-style: bold;
+}
+
+.card-faction {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.faction-nature { color: rgb(100, 255, 100); }
+.faction-technology { color: rgb(100, 200, 255); }
+.faction-magic { color: rgb(255, 100, 255); }
+.faction-commerce { color: rgb(255, 215, 0); }
+.faction-military { color: rgb(255, 100, 100); }
+
+/* Bottom Bar */
+.bottom-bar {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: rgb(30, 35, 45);
+    border-top-width: 2px;
+    border-top-color: rgb(60, 70, 85);
+}
+
+/* Button Styles */
+.action-button {
+    padding: 12px 24px;
+    border-radius: 6px;
+    border-width: 2px;
+    font-size: 14px;
+    -unity-font-style: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition-duration: 0.2s;
+    min-width: 120px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.primary-button {
+    background-color: rgb(70, 130, 200);
+    border-color: rgb(90, 150, 220);
+    color: white;
+}
+
+.primary-button:hover {
+    background-color: rgb(90, 150, 220);
+    border-color: rgb(110, 170, 240);
+    scale: 1.05;
+}
+
+.primary-button:active {
+    background-color: rgb(50, 110, 180);
+    scale: 0.98;
+}
+
+.secondary-button {
+    background-color: rgb(60, 70, 85);
+    border-color: rgb(80, 90, 105);
+    color: rgb(200, 210, 220);
+}
+
+.secondary-button:hover {
+    background-color: rgb(80, 90, 105);
+    border-color: rgb(100, 110, 125);
+    scale: 1.05;
+}
+
+.secondary-button:active {
+    background-color: rgb(40, 50, 65);
+    scale: 0.98;
+}
+
+/* Shop Overlay */
+.shop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.shop-container {
+    width: 80%;
+    height: 80%;
+    max-width: 800px;
+    max-height: 600px;
+    background-color: rgb(30, 35, 45);
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: rgb(60, 70, 85);
+}
+
+.shop-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(60, 70, 85);
+}
+
+.shop-title {
+    font-size: 24px;
+    color: white;
+    -unity-font-style: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.shop-gold-value {
+    font-size: 18px;
+    color: rgb(255, 215, 0);
+    -unity-font-style: bold;
+}
+
+.close-button {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(200, 80, 80);
+    border-color: rgb(220, 100, 100);
+    border-radius: 20px;
+    font-size: 20px;
+    color: white;
+    -unity-font-style: bold;
+}
+
+.close-button:hover {
+    background-color: rgb(220, 100, 100);
+    scale: 1.1;
+}
+
+.shop-scroll {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.shop-items {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.shop-item {
+    width: 200px;
+    background-color: rgb(40, 45, 55);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(60, 70, 85);
+    padding: 15px;
+    margin: 7px;
+}
+
+.shop-item:hover {
+    background-color: rgb(50, 55, 65);
+    border-color: rgb(100, 120, 140);
+}
+
+.shop-item.affordable {
+    border-color: rgb(100, 200, 100);
+}
+
+.shop-item.expensive {
+    border-color: rgb(200, 100, 100);
+    opacity: 0.7;
+}
+
+.shop-price {
+    font-size: 16px;
+    color: rgb(255, 215, 0);
+    -unity-font-style: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.shop-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-top-width: 2px;
+    border-top-color: rgb(60, 70, 85);
+}
+
+/* Game Over/Victory Overlays */
+.game-over-overlay,
+.victory-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.game-over-container,
+.victory-container {
+    width: 400px;
+    background-color: rgb(30, 35, 45);
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: rgb(60, 70, 85);
+    padding: 30px;
+    align-items: center;
+}
+
+.game-over-title {
+    font-size: 32px;
+    color: rgb(255, 100, 100);
+    -unity-font-style: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.victory-title {
+    font-size: 32px;
+    color: rgb(100, 255, 100);
+    -unity-font-style: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.game-over-message,
+.victory-message {
+    font-size: 16px;
+    color: rgb(180, 190, 200);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.game-over-stats,
+.victory-stats {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.stat-line {
+    font-size: 14px;
+    color: rgb(200, 210, 220);
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.game-over-buttons,
+.victory-buttons {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.game-over-buttons .action-button,
+.victory-buttons .action-button {
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: flex;
+}

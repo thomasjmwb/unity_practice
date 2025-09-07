@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="card-container" class="hand-card">
+        <ui:VisualElement name="card-header" class="card-header">
+            <ui:Label text="Card Name" name="card-name" class="card-name" />
+            <ui:Label text="3" name="card-cost" class="card-cost" />
+        </ui:VisualElement>
+        
+        <ui:VisualElement name="card-art-container" class="card-art-container">
+            <ui:VisualElement name="card-art" class="card-art" />
+        </ui:VisualElement>
+        
+        <ui:Label text="Card description goes here and can wrap to multiple lines" name="card-description" class="card-description" />
+        
+        <ui:VisualElement name="card-footer" class="card-stats">
+            <ui:Label text="Nature" name="card-faction" class="card-faction faction-nature" />
+            <ui:VisualElement name="card-effects" class="card-effects">
+                <ui:Label text="⚡ +10 Gold" name="effect-preview" class="effect-preview" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
