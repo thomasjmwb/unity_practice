@@ -193,6 +193,7 @@
     padding: 15px;
     transition-duration: 0.2s;
     margin-bottom: 10px;
+    min-height: 180px;
 }
 
 .hand-card:hover {
@@ -206,11 +207,36 @@
     scale: 1.1;
 }
 
+.card-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
 .card-name {
     font-size: 16px;
     color: white;
     -unity-font-style: bold;
-    margin-bottom: 5px;
+    flex-grow: 1;
+}
+
+.card-art-container {
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-art {
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: rgb(60, 70, 85);
+}
+
+.card-art.placeholder {
+    background-color: rgb(50, 60, 80);
 }
 
 .card-description {
@@ -218,6 +244,7 @@
     color: rgb(180, 190, 200);
     white-space: normal;
     margin-bottom: 8px;
+    flex-grow: 1;
 }
 
 .card-stats {
@@ -230,12 +257,40 @@
     font-size: 14px;
     color: rgb(255, 150, 100);
     -unity-font-style: bold;
+    background-color: rgb(60, 70, 85);
+    border-radius: 12px;
+    padding: 4px 8px;
+    min-width: 24px;
+    text-align: center;
 }
 
 .card-faction {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    -unity-font-style: bold;
+}
+
+.grid-card {
+    padding: 5px;
+    background-color: rgb(50, 60, 75);
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: rgb(80, 90, 105);
+    width: 100%;
+    height: 100%;
+}
+
+.grid-card .card-name {
+    font-size: 12px;
+    text-align: center;
+}
+
+.grid-card .card-cost {
+    font-size: 10px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
 
 .faction-nature { color: rgb(100, 255, 100); }

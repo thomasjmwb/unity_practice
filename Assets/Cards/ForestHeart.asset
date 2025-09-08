@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ForestHeart
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Forest Heart
-  description: Nature's growing strength
+  description: Nature's bounty
   cardArt: {fileID: 0}
   faction: 0
   cost: 5

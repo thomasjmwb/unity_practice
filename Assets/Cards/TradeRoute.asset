@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TradeRoute
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Trade Route
-  description: Bonus gold for completing lines
+  description: Forms powerful lines
   cardArt: {fileID: 0}
   faction: 3
   cost: 3

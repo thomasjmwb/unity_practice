@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MarketStall
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Market Stall
-  description: Gains +3 gold per adjacent card
+  description: More gold near other cards
   cardArt: {fileID: 0}
   faction: 3
   cost: 2

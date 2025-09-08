@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Watchtower
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Watchtower
-  description: Double gold when placed in corners
+  description: Strong in corners
   cardArt: {fileID: 0}
   faction: 4
   cost: 3

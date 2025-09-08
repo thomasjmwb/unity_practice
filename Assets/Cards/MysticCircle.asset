@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MysticCircle
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Mystic Circle
-  description: Magic amplification nearby
+  description: Magic amplification
   cardArt: {fileID: 0}
   faction: 2
   cost: 2
@@ -25,5 +25,5 @@ MonoBehaviour:
     requiresFactionCount: 0
     isGlobalModifier: 0
   prefersCorners: 0
-  prefersEdges: 0
-  prefersCenter: 1
+  prefersEdges: 1
+  prefersCenter: 0

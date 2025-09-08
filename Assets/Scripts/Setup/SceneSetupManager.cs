@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class SceneSetupManager : MonoBehaviour
 {
@@ -55,27 +58,97 @@ public class SceneSetupManager : MonoBehaviour
         {
             uiRootObj = new GameObject("UI Root");
             
-            // Add UI Document for UI Toolkit
+            // Add UI Toolkit test only
             UIDocument uiDocument = uiRootObj.AddComponent<UIDocument>();
             
-            // Try to find and assign the main UI asset
+            // Create Panel Settings asset for Unity 6 UI Toolkit
+            PanelSettings panelSettings = CreatePanelSettings();
+            uiDocument.panelSettings = panelSettings;
+            
+            SimpleUITest simpleTest = uiRootObj.AddComponent<SimpleUITest>();
+            
+            // Load UI assets from the correct paths
+#if UNITY_EDITOR
+            var mainUIAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/UI/MainGameUI.uxml");
+            var gameStyles = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI/GameStyles.uss");
+            var cardStyles = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI/CardStyles.uss");
+#else
             var mainUIAsset = Resources.Load<VisualTreeAsset>("UI/MainGameUI");
-            if (mainUIAsset != null)
+            var gameStyles = Resources.Load<StyleSheet>("UI/GameStyles");
+            var cardStyles = Resources.Load<StyleSheet>("UI/CardStyles");
+#endif
+            
+            // TEMPORARILY DISABLE COMPLEX UI SYSTEM - using simple test instead
+            bool useSimpleTestUI = true;
+            
+            if (!useSimpleTestUI && mainUIAsset != null)
             {
                 uiDocument.visualTreeAsset = mainUIAsset;
+                
+                // Add UI Toolkit Manager only when using full UI
+                UIToolkitManager uiManager = uiRootObj.AddComponent<UIToolkitManager>();
+                uiManager.mainUIDocument = uiDocument;
+                
+                // Assign style sheets
+                if (gameStyles != null)
+                {
+                    uiManager.gameStyles = gameStyles;
+                    Debug.Log("✓ Game styles loaded");
+                }
+                
+                if (cardStyles != null)
+                {
+                    uiManager.cardStyles = cardStyles;
+                    Debug.Log("✓ Card styles loaded");
+                }
+                
+                // Also add legacy UI Manager for compatibility
+                UIManager legacyUIManager = uiRootObj.AddComponent<UIManager>();
+                legacyUIManager.useUIToolkit = true;
+                legacyUIManager.uiToolkitManager = uiManager;
+                
+                Debug.Log("✓ Full UI System created");
             }
-            
-            // Add UI Toolkit Manager
-            UIToolkitManager uiManager = uiRootObj.AddComponent<UIToolkitManager>();
-            uiManager.mainUIDocument = uiDocument;
-            
-            // Also add legacy UI Manager for compatibility
-            UIManager legacyUIManager = uiRootObj.AddComponent<UIManager>();
-            legacyUIManager.useUIToolkit = true;
-            legacyUIManager.uiToolkitManager = uiManager;
-            
-            Debug.Log("✓ UI System created");
+            else
+            {
+                Debug.Log("✓ UI Toolkit test created with Panel Settings");
+            }
         }
+    }
+    
+    PanelSettings CreatePanelSettings()
+    {
+        // Create a PanelSettings asset at runtime
+        PanelSettings panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
+        
+        // Configure panel settings for proper UI Toolkit rendering
+        panelSettings.referenceResolution = new Vector2Int(1920, 1080);
+        panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
+        panelSettings.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight;
+        panelSettings.match = 0.5f; // Balance between width and height matching
+        panelSettings.sortingOrder = 0;
+        
+        // Set theme style sheet to null (we'll use our own styles)
+        panelSettings.themeStyleSheet = null;
+        
+#if UNITY_EDITOR
+        // Save the panel settings asset for future use
+        if (!AssetDatabase.IsValidFolder("Assets/UI"))
+        {
+            AssetDatabase.CreateFolder("Assets", "UI");
+        }
+        
+        string assetPath = "Assets/UI/DefaultPanelSettings.asset";
+        if (!System.IO.File.Exists(assetPath))
+        {
+            AssetDatabase.CreateAsset(panelSettings, assetPath);
+            AssetDatabase.SaveAssets();
+            Debug.Log("✓ Panel Settings asset created at: " + assetPath);
+        }
+#endif
+        
+        Debug.Log("✓ Panel Settings configured for UI Toolkit");
+        return panelSettings;
     }
     
     void CreateCards()
@@ -165,7 +238,11 @@ public class SceneSetupManager : MonoBehaviour
         UIManager uiManager = uiRootObj?.GetComponent<UIManager>();
         UIToolkitManager uiToolkitManager = uiRootObj?.GetComponent<UIToolkitManager>();
         
-        if (gameManager == null) return;
+        if (gameManager == null) 
+        {
+            Debug.LogError("GameManager component not found!");
+            return;
+        }
         
         // Create other required components
         if (gridObj == null)
@@ -191,10 +268,13 @@ public class SceneSetupManager : MonoBehaviour
             ShopManager shopManager = shopObj.AddComponent<ShopManager>();
             
             // Add all created cards to the shop's available cards
-            shopManager.availableCards.AddRange(createdCards);
-            shopManager.tier1Cards.AddRange(System.Array.FindAll(createdCards, c => c.rarity <= 1));
-            shopManager.tier2Cards.AddRange(System.Array.FindAll(createdCards, c => c.rarity == 2));
-            shopManager.tier3Cards.AddRange(System.Array.FindAll(createdCards, c => c.rarity >= 3));
+            if (createdCards != null)
+            {
+                shopManager.availableCards.AddRange(createdCards);
+                shopManager.tier1Cards.AddRange(System.Array.FindAll(createdCards, c => c.rarity <= 1));
+                shopManager.tier2Cards.AddRange(System.Array.FindAll(createdCards, c => c.rarity == 2));
+                shopManager.tier3Cards.AddRange(System.Array.FindAll(createdCards, c => c.rarity >= 3));
+            }
             
             gameManager.shopManager = shopManager;
         }
@@ -202,6 +282,10 @@ public class SceneSetupManager : MonoBehaviour
         // Connect all references
         gameManager.playerDeck = deck;
         gameManager.uiManager = uiManager;
+        
+        // Initialize the game immediately
+        Debug.Log("🎮 Starting GameManager initialization...");
+        gameManager.InitializeGame();
         
         Debug.Log("✓ All components connected");
     }

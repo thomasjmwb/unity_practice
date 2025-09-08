@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TreeGrove
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Tree Grove
-  description: More gold for each Nature card
+  description: Nature synergy bonus
   cardArt: {fileID: 0}
   faction: 0
   cost: 2

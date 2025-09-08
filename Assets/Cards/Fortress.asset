@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fortress
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Fortress
-  description: Strong defensive position
+  description: Defensive position
   cardArt: {fileID: 0}
   faction: 4
   cost: 4

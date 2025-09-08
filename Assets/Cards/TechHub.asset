@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TechHub
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Tech Hub
-  description: Technology synergy bonus
+  description: Technology advancement
   cardArt: {fileID: 0}
   faction: 1
   cost: 3

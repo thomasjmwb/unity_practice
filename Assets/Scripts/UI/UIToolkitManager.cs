@@ -77,6 +77,98 @@ public class UIToolkitManager : MonoBehaviour
         InitializeUI();
         SetupEventHandlers();
         InitializeGrid();
+        
+        // Add some sample cards to make UI visible for testing
+        AddSampleCardsForTesting();
+    }
+    
+    void AddSampleCardsForTesting()
+    {
+        Debug.Log("Adding sample cards for testing...");
+        
+        // Create some dummy cards to show the UI working
+        if (handCards != null)
+        {
+            Debug.Log("Hand cards container found, adding sample cards");
+            for (int i = 0; i < 3; i++)
+            {
+                VisualElement sampleCard = CreateSampleCard($"Sample Card {i + 1}", i + 1);
+                handCards.Add(sampleCard);
+                Debug.Log($"Added sample card {i + 1}");
+            }
+        }
+        else
+        {
+            Debug.LogError("Hand cards container not found! Check UXML structure.");
+        }
+        
+        // Also place one card on the grid as an example
+        if (gridSlots[1, 1] != null)
+        {
+            Debug.Log("Grid center slot found, adding sample card");
+            VisualElement gridCard = CreateSampleCard("Grid Card", 2);
+            gridCard.RemoveFromClassList("hand-card");
+            gridCard.AddToClassList("grid-card");
+            gridSlots[1, 1].Add(gridCard);
+            gridSlots[1, 1].AddToClassList("occupied");
+        }
+        else
+        {
+            Debug.LogError("Grid slot [1,1] not found! Check grid initialization.");
+        }
+        
+        Debug.Log("Sample card addition complete");
+    }
+    
+    VisualElement CreateSampleCard(string cardName, int cost)
+    {
+        VisualElement cardElement = new VisualElement();
+        cardElement.AddToClassList("hand-card");
+        
+        // Header container
+        VisualElement header = new VisualElement();
+        header.AddToClassList("card-header");
+        
+        // Card name
+        Label nameLabel = new Label(cardName);
+        nameLabel.AddToClassList("card-name");
+        
+        // Cost
+        Label costLabel = new Label(cost.ToString());
+        costLabel.AddToClassList("card-cost");
+        
+        header.Add(nameLabel);
+        header.Add(costLabel);
+        cardElement.Add(header);
+        
+        // Art container
+        VisualElement artContainer = new VisualElement();
+        artContainer.AddToClassList("card-art-container");
+        VisualElement art = new VisualElement();
+        art.AddToClassList("card-art");
+        art.AddToClassList("placeholder");
+        art.style.backgroundColor = new Color(0.3f, 0.4f, 0.6f, 1f); // Blue placeholder
+        art.style.height = 80;
+        artContainer.Add(art);
+        cardElement.Add(artContainer);
+        
+        // Description
+        Label descLabel = new Label("This is a sample card for testing the UI.");
+        descLabel.AddToClassList("card-description");
+        cardElement.Add(descLabel);
+        
+        // Footer with faction
+        VisualElement footer = new VisualElement();
+        footer.AddToClassList("card-stats");
+        
+        Label factionLabel = new Label("Commerce");
+        factionLabel.AddToClassList("card-faction");
+        factionLabel.AddToClassList("faction-commerce");
+        footer.Add(factionLabel);
+        
+        cardElement.Add(footer);
+        
+        return cardElement;
     }
     
     void InitializeUI()
@@ -89,11 +181,34 @@ public class UIToolkitManager : MonoBehaviour
         
         root = mainUIDocument.rootVisualElement;
         
+        if (root == null)
+        {
+            Debug.LogError("Root visual element is null! Check if UXML is properly loaded.");
+            return;
+        }
+        
+        Debug.Log($"UI Root found with {root.childCount} children");
+        
         // Apply style sheets
         if (gameStyles != null)
+        {
             root.styleSheets.Add(gameStyles);
+            Debug.Log("Game styles applied to root");
+        }
+        else
+        {
+            Debug.LogWarning("Game styles are null!");
+        }
+        
         if (cardStyles != null)
+        {
             root.styleSheets.Add(cardStyles);
+            Debug.Log("Card styles applied to root");
+        }
+        else
+        {
+            Debug.LogWarning("Card styles are null!");
+        }
         
         // Get UI element references
         GetUIReferences();
@@ -101,6 +216,8 @@ public class UIToolkitManager : MonoBehaviour
     
     void GetUIReferences()
     {
+        Debug.Log("Getting UI element references...");
+        
         // Top bar elements
         roundValue = root.Q<Label>("round-value");
         goldValue = root.Q<Label>("gold-value");
@@ -113,6 +230,9 @@ public class UIToolkitManager : MonoBehaviour
         cardGrid = root.Q<VisualElement>("card-grid");
         handCards = root.Q<VisualElement>("hand-cards");
         gridGoldTotal = root.Q<Label>("grid-gold-total");
+        
+        Debug.Log($"Card grid found: {cardGrid != null}");
+        Debug.Log($"Hand cards found: {handCards != null}");
         
         // Button elements
         endRoundBtn = root.Q<Button>("end-round-btn");
@@ -134,6 +254,8 @@ public class UIToolkitManager : MonoBehaviour
         quitBtn = root.Q<Button>("quit-btn");
         victoryRestartBtn = root.Q<Button>("victory-restart-btn");
         victoryQuitBtn = root.Q<Button>("victory-quit-btn");
+        
+        Debug.Log("UI references gathered");
     }
     
     void SetupEventHandlers()

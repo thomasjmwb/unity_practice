@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CrystalMine
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardName: Crystal Mine
-  description: Gains +2 gold each round
+  description: Escalates each round
   cardArt: {fileID: 0}
   faction: 2
   cost: 4
