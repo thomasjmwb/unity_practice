@@ -9,7 +9,6 @@
 /* Force text visibility for all labels */
 Label {
     color: white;
-    -unity-font-definition: none;
 }
 
 /* Top Bar Styles */
