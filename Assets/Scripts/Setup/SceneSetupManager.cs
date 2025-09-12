@@ -134,7 +134,7 @@ public class SceneSetupManager : MonoBehaviour
         
         // CRITICAL: Set the default runtime theme so text renders properly
 #if UNITY_EDITOR
-        var defaultTheme = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
+        var defaultTheme = AssetDatabase.LoadAssetAtPath<ThemeStyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
         if (defaultTheme != null)
         {
             panelSettings.themeStyleSheet = defaultTheme;
@@ -143,13 +143,29 @@ public class SceneSetupManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Could not find UnityDefaultRuntimeTheme.tss - text may not render properly");
+            // Try the built-in default theme
+            var builtInTheme = Resources.GetBuiltinResource<ThemeStyleSheet>("Default Runtime Theme.tss");
+            if (builtInTheme != null)
+            {
+                panelSettings.themeStyleSheet = builtInTheme;
+                Debug.Log("✓ Built-in default runtime theme applied to PanelSettings");
+            }
         }
 #else
         // For builds, try to load from Resources
-        var defaultTheme = Resources.Load<StyleSheet>("UnityDefaultRuntimeTheme");
+        var defaultTheme = Resources.Load<ThemeStyleSheet>("UnityDefaultRuntimeTheme");
         if (defaultTheme != null)
         {
             panelSettings.themeStyleSheet = defaultTheme;
+        }
+        else
+        {
+            // Fallback to built-in theme
+            var builtInTheme = Resources.GetBuiltinResource<ThemeStyleSheet>("Default Runtime Theme.tss");
+            if (builtInTheme != null)
+            {
+                panelSettings.themeStyleSheet = builtInTheme;
+            }
         }
 #endif
         

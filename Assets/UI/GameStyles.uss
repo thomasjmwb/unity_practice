@@ -6,6 +6,12 @@
     color: white;
 }
 
+/* Force text visibility for all labels */
+Label {
+    color: white;
+    -unity-font-definition: none;
+}
+
 /* Top Bar Styles */
 .top-bar {
     flex-direction: row;
@@ -31,7 +37,7 @@
 
 .info-label {
     font-size: 12px;
-    color: rgb(180, 190, 200);
+    color: rgb(180, 190, 200) !important;
     margin-bottom: 5px;
     -unity-font-style: bold;
     text-transform: uppercase;
@@ -40,12 +46,12 @@
 
 .info-value {
     font-size: 20px;
-    color: white;
+    color: white !important;
     -unity-font-style: bold;
 }
 
 .round-value {
-    color: rgb(100, 200, 255);
+    color: rgb(100, 200, 255) !important;
 }
 
 .gold-value {
@@ -110,7 +116,7 @@
 
 .section-title {
     font-size: 16px;
-    color: rgb(200, 210, 220);
+    color: rgb(200, 210, 220) !important;
     -unity-font-style: bold;
     margin-bottom: 15px;
     text-align: center;
@@ -173,7 +179,7 @@
 
 .grid-gold-total {
     font-size: 20px;
-    color: rgb(255, 215, 0);
+    color: rgb(255, 215, 0) !important;
     -unity-font-style: bold;
     text-align: center;
 }
