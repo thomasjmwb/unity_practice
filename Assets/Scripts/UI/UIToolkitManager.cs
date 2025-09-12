@@ -153,7 +153,7 @@ public class UIToolkitManager : MonoBehaviour
         cardElement.Add(artContainer);
         
         // Description
-        Label descLabel = new Label("This is a sample card for testing the UI.");
+        Label descLabel = new Label("Sample card for testing UI functionality. Shows card layout and styling.");
         descLabel.AddToClassList("card-description");
         cardElement.Add(descLabel);
         

@@ -58,28 +58,28 @@ public class SceneSetupManager : MonoBehaviour
         {
             uiRootObj = new GameObject("UI Root");
             
-            // Add UI Toolkit test only
+            // Add UI Toolkit system
             UIDocument uiDocument = uiRootObj.AddComponent<UIDocument>();
             
             // Create Panel Settings asset for Unity 6 UI Toolkit
             PanelSettings panelSettings = CreatePanelSettings();
             uiDocument.panelSettings = panelSettings;
             
-            SimpleUITest simpleTest = uiRootObj.AddComponent<SimpleUITest>();
-            
             // Load UI assets from the correct paths
 #if UNITY_EDITOR
             var mainUIAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/UI/MainGameUI.uxml");
             var gameStyles = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI/GameStyles.uss");
             var cardStyles = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI/CardStyles.uss");
+            
+            Debug.Log($"UI Asset Loading - MainUI: {mainUIAsset != null}, GameStyles: {gameStyles != null}, CardStyles: {cardStyles != null}");
 #else
             var mainUIAsset = Resources.Load<VisualTreeAsset>("UI/MainGameUI");
             var gameStyles = Resources.Load<StyleSheet>("UI/GameStyles");
             var cardStyles = Resources.Load<StyleSheet>("UI/CardStyles");
 #endif
             
-            // TEMPORARILY DISABLE COMPLEX UI SYSTEM - using simple test instead
-            bool useSimpleTestUI = true;
+            // ENABLE COMPLEX UI SYSTEM - full UI Toolkit implementation
+            bool useSimpleTestUI = false;
             
             if (!useSimpleTestUI && mainUIAsset != null)
             {
@@ -111,7 +111,11 @@ public class SceneSetupManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("✓ UI Toolkit test created with Panel Settings");
+                Debug.LogWarning("MainGameUI.uxml not found! Creating simple fallback UI.");
+                
+                // Add SimpleUITest as fallback
+                SimpleUITest simpleTest = uiRootObj.AddComponent<SimpleUITest>();
+                Debug.Log("✓ Simple UI fallback created with Panel Settings");
             }
         }
     }
@@ -128,8 +132,26 @@ public class SceneSetupManager : MonoBehaviour
         panelSettings.match = 0.5f; // Balance between width and height matching
         panelSettings.sortingOrder = 0;
         
-        // Set theme style sheet to null (we'll use our own styles)
-        panelSettings.themeStyleSheet = null;
+        // CRITICAL: Set the default runtime theme so text renders properly
+#if UNITY_EDITOR
+        var defaultTheme = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
+        if (defaultTheme != null)
+        {
+            panelSettings.themeStyleSheet = defaultTheme;
+            Debug.Log("✓ Default runtime theme applied to PanelSettings");
+        }
+        else
+        {
+            Debug.LogWarning("Could not find UnityDefaultRuntimeTheme.tss - text may not render properly");
+        }
+#else
+        // For builds, try to load from Resources
+        var defaultTheme = Resources.Load<StyleSheet>("UnityDefaultRuntimeTheme");
+        if (defaultTheme != null)
+        {
+            panelSettings.themeStyleSheet = defaultTheme;
+        }
+#endif
         
 #if UNITY_EDITOR
         // Save the panel settings asset for future use

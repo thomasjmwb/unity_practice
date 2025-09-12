@@ -4,23 +4,24 @@
         <!-- Top Bar - Game Info -->
         <ui:VisualElement name="top-bar" class="top-bar">
             <ui:VisualElement name="round-info" class="info-panel">
-                <ui:Label text="Round" name="round-label" class="info-label" />
+                <ui:Label text="ROUND" name="round-label" class="info-label" />
                 <ui:Label text="1" name="round-value" class="info-value round-value" />
             </ui:VisualElement>
             
             <ui:VisualElement name="gold-info" class="info-panel gold-panel">
-                <ui:Label text="Gold" name="gold-label" class="info-label" />
+                <ui:Label text="GOLD EARNED" name="gold-label" class="info-label" />
                 <ui:Label text="0" name="gold-value" class="info-value gold-value" />
                 <ui:ProgressBar low-value="0" high-value="100" value="0" name="gold-progress" class="gold-progress" />
                 <ui:Label text="/ 100" name="target-value" class="info-value target-value" />
             </ui:VisualElement>
             
             <ui:VisualElement name="deck-info" class="info-panel">
-                <ui:Label text="Deck" name="deck-label" class="info-label" />
+                <ui:Label text="CARDS LEFT" name="deck-label" class="info-label" />
                 <ui:Label text="20" name="deck-value" class="info-value deck-value" />
             </ui:VisualElement>
             
             <ui:VisualElement name="phase-info" class="info-panel">
+                <ui:Label text="GAME PHASE" name="phase-label" class="info-label" />
                 <ui:Label text="Playing" name="phase-value" class="info-value phase-value" />
             </ui:VisualElement>
         </ui:VisualElement>
@@ -30,18 +31,18 @@
             
             <!-- Grid Area -->
             <ui:VisualElement name="grid-container" class="grid-container">
-                <ui:Label text="Card Grid" class="section-title" />
+                <ui:Label text="CARD PLACEMENT GRID (Drag cards here)" class="section-title" />
                 <ui:VisualElement name="card-grid" class="card-grid">
                     <!-- Grid slots will be created dynamically -->
                 </ui:VisualElement>
                 <ui:VisualElement name="grid-info" class="grid-info">
-                    <ui:Label text="Total Gold: 0" name="grid-gold-total" class="grid-gold-total" />
+                    <ui:Label text="Total Grid Value: 0 Gold" name="grid-gold-total" class="grid-gold-total" />
                 </ui:VisualElement>
             </ui:VisualElement>
             
             <!-- Hand Area -->
             <ui:VisualElement name="hand-container" class="hand-container">
-                <ui:Label text="Hand" class="section-title" />
+                <ui:Label text="YOUR HAND (Click or drag cards to grid)" class="section-title" />
                 <ui:ScrollView name="hand-scroll" class="hand-scroll">
                     <ui:VisualElement name="hand-cards" class="hand-cards">
                         <!-- Hand cards will be created dynamically -->
