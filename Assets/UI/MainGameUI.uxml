@@ -1,65 +1,46 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameStyles.uss?fileID=7433441132597879392&amp;guid=9fb9ce9aa8eae6744a4696c9cd351d77&amp;type=3#GameStyles" />
     <ui:VisualElement name="main-container" class="main-container">
-        
-        <!-- Top Bar - Game Info -->
         <ui:VisualElement name="top-bar" class="top-bar">
             <ui:VisualElement name="round-info" class="info-panel">
                 <ui:Label text="ROUND" name="round-label" class="info-label" />
                 <ui:Label text="1" name="round-value" class="info-value round-value" />
             </ui:VisualElement>
-            
             <ui:VisualElement name="gold-info" class="info-panel gold-panel">
                 <ui:Label text="GOLD EARNED" name="gold-label" class="info-label" />
                 <ui:Label text="0" name="gold-value" class="info-value gold-value" />
                 <ui:ProgressBar low-value="0" high-value="100" value="0" name="gold-progress" class="gold-progress" />
                 <ui:Label text="/ 100" name="target-value" class="info-value target-value" />
             </ui:VisualElement>
-            
             <ui:VisualElement name="deck-info" class="info-panel">
                 <ui:Label text="CARDS LEFT" name="deck-label" class="info-label" />
                 <ui:Label text="20" name="deck-value" class="info-value deck-value" />
             </ui:VisualElement>
-            
             <ui:VisualElement name="phase-info" class="info-panel">
                 <ui:Label text="GAME PHASE" name="phase-label" class="info-label" />
                 <ui:Label text="Playing" name="phase-value" class="info-value phase-value" />
             </ui:VisualElement>
         </ui:VisualElement>
-        
-        <!-- Main Game Area -->
         <ui:VisualElement name="game-area" class="game-area">
-            
-            <!-- Grid Area -->
             <ui:VisualElement name="grid-container" class="grid-container">
                 <ui:Label text="CARD PLACEMENT GRID (Drag cards here)" class="section-title" />
-                <ui:VisualElement name="card-grid" class="card-grid">
-                    <!-- Grid slots will be created dynamically -->
-                </ui:VisualElement>
+                <ui:VisualElement name="card-grid" class="card-grid" />
                 <ui:VisualElement name="grid-info" class="grid-info">
                     <ui:Label text="Total Grid Value: 0 Gold" name="grid-gold-total" class="grid-gold-total" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            
-            <!-- Hand Area -->
             <ui:VisualElement name="hand-container" class="hand-container">
                 <ui:Label text="YOUR HAND (Click or drag cards to grid)" class="section-title" />
                 <ui:ScrollView name="hand-scroll" class="hand-scroll">
-                    <ui:VisualElement name="hand-cards" class="hand-cards">
-                        <!-- Hand cards will be created dynamically -->
-                    </ui:VisualElement>
+                    <ui:VisualElement name="hand-cards" class="hand-cards" />
                 </ui:ScrollView>
             </ui:VisualElement>
-            
         </ui:VisualElement>
-        
-        <!-- Bottom Bar - Controls -->
         <ui:VisualElement name="bottom-bar" class="bottom-bar">
             <ui:Button text="End Round" name="end-round-btn" class="action-button primary-button" />
             <ui:Button text="Auto Place" name="auto-place-btn" class="action-button secondary-button" />
             <ui:Button text="Clear Grid" name="clear-grid-btn" class="action-button secondary-button" />
         </ui:VisualElement>
-        
-        <!-- Shop Overlay -->
         <ui:VisualElement name="shop-overlay" class="shop-overlay hidden">
             <ui:VisualElement name="shop-container" class="shop-container">
                 <ui:VisualElement name="shop-header" class="shop-header">
@@ -69,25 +50,19 @@
                     </ui:VisualElement>
                     <ui:Button text="×" name="close-shop-btn" class="close-button" />
                 </ui:VisualElement>
-                
                 <ui:ScrollView name="shop-scroll" class="shop-scroll">
-                    <ui:VisualElement name="shop-items" class="shop-items">
-                        <!-- Shop items will be created dynamically -->
-                    </ui:VisualElement>
+                    <ui:VisualElement name="shop-items" class="shop-items" />
                 </ui:ScrollView>
-                
                 <ui:VisualElement name="shop-footer" class="shop-footer">
                     <ui:Button text="Refresh (10g)" name="refresh-shop-btn" class="action-button secondary-button" />
                     <ui:Button text="Continue" name="continue-btn" class="action-button primary-button" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        
-        <!-- Game Over Overlay -->
         <ui:VisualElement name="game-over-overlay" class="game-over-overlay hidden">
             <ui:VisualElement name="game-over-container" class="game-over-container">
                 <ui:Label text="Game Over" name="game-over-title" class="game-over-title" />
-                <ui:Label text="You couldn't pay the rent!" name="game-over-message" class="game-over-message" />
+                <ui:Label text="You couldn&apos;t pay the rent!" name="game-over-message" class="game-over-message" />
                 <ui:VisualElement name="game-over-stats" class="game-over-stats">
                     <ui:Label text="Rounds Survived: 5" name="rounds-survived" class="stat-line" />
                     <ui:Label text="Total Gold Earned: 450" name="total-gold" class="stat-line" />
@@ -98,8 +73,6 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        
-        <!-- Victory Overlay -->
         <ui:VisualElement name="victory-overlay" class="victory-overlay hidden">
             <ui:VisualElement name="victory-container" class="victory-container">
                 <ui:Label text="Victory!" name="victory-title" class="victory-title" />
@@ -114,6 +87,5 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        
     </ui:VisualElement>
 </ui:UXML>
